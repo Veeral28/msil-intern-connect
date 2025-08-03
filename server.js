@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve the login page at the root
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'intern', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'intern', 'intern.html'));
 });
 
 // API Routes
