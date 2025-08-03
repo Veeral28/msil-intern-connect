@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <button id="logout-btn">Logout</button>
+    </header>
+
+    <main>
+        <section class="card">
+            <div class="card-header">
+                <h2>Intern Batches</h2>
+                <button id="add-batch-btn" class="add-btn">+ Add Batch</button>
+            </div>
+            <table id="batches-table">
+                <thead>
+                    <tr><th>Batch Name</th><th>Start Date</th><th>End Date</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <h2>Interns</h2>
+                <button id="add-intern-btn" class="add-btn">+ Add Intern</button>
+            </div>
+            <table id="interns-table">
+                <thead>
+                    <tr><th>Name</th><th>Email</th><th>Department</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+        <section class="card">
+    <div class="card-header">
+        <h2>Assign a New Task</h2>
+    </div>
+    <form id="assign-task-form">
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="task-title">Task Title</label>
+                <input type="text" id="task-title" required>
+            </div>
+            <div class="input-group">
+                <label for="task-intern-select">Assign To Intern</label>
+                <select id="task-intern-select" required></select>
+            </div>
+            <div class="input-group">
+                <label for="task-deadline">Deadline</label>
+                <input type="date" id="task-deadline" required>
+            </div>
+            <div class="input-group full-width">
+                <label for="task-description">Description</label>
+                <textarea id="task-description" rows="3"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="add-btn">Assign Task</button>
+    </form>
+</section>
+    <div id="chat-widget">
+        <div id="chat-header">
+            <span>Chat with Interns</span>
+            <button id="chat-toggle-btn">-</button>
+        </div>
+        <div id="chat-body">
+            <div id="chat-contact-list">
+                </div>
+            <div id="chat-main">
+                <div id="chat-messages"></div>
+                <div id="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message..." disabled>
+                    <button id="chat-send-btn" disabled>Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+
+    <div id="batch-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="batch-close-btn">&times;</span>
+            <h2 id="batch-modal-title">Add New Batch</h2>
+            <form id="batch-form">
+                <input type="hidden" id="batch-id">
+                <input type="text" id="batch-name" placeholder="Batch Name" required>
+                <label for="batch-start-date">Start Date</label>
+                <input type="date" id="batch-start-date" required>
+                <label for="batch-end-date">End Date</label>
+                <input type="date" id="batch-end-date" required>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="intern-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="intern-close-btn">&times;</span>
+            <h2 id="intern-modal-title">Add New Intern</h2>
+            <form id="intern-form">
+                <input type="hidden" id="intern-id">
+                <input type="text" id="intern-name" placeholder="Full Name" required>
+                <input type="email" id="intern-email" placeholder="Email Address" required>
+                <input type="password" id="intern-password" placeholder="Password (leave blank to keep unchanged)">
+                <input type="text" id="intern-department" placeholder="Department" required>
+                <input type="number" id="intern-age" placeholder="Age" required>
+                <label>Batch:</label>
+                <select id="intern-batch-select" required></select>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Dashboard</title>
+    <link rel="stylesheet" href="intern.css">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>My Dashboard</h1>
+        <button id="logout-btn">Logout</button>
+    </header>
+
+    <main>
+        <section class="card" id="welcome-card">
+            <h2 id="welcome-name">Welcome, Intern!</h2>
+            <div class="details-grid">
+                <div><strong>Email:</strong> <span id="detail-email"></span></div>
+                <div><strong>Department:</strong> <span id="detail-department"></span></div>
+                <div><strong>Mentor:</strong> <span id="detail-mentor"></span></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>My Tasks</h2>
+            <div id="tasks-container">
+                </div>
+        </section>
+    </main>
+
+    <div id="chat-widget">
+    <div id="chat-header">
+        <span id="chat-with-mentor">Chat with Mentor</span>
+        <button id="chat-toggle-btn">-</button>
+    </div>
+    <div id="chat-body">
+         <div id="chat-main">
+            <div id="chat-messages"></div>
+            <div id="chat-input-area">
+                 <input type="text" id="chat-input" placeholder="Type a message...">
+                 <button id="chat-send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="intern.js"></script>
+</body>
+</html>
