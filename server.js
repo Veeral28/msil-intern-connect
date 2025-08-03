@@ -15,7 +15,7 @@ const app = express();
 // Middleware
 app.use(cors()); 
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('public/intern'));
 
 // HTTP Server & Socket.IO
 const server = http.createServer(app);
