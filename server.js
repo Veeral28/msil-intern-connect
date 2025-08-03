@@ -4,47 +4,46 @@ const express = require('express');
 const http = require('http'); 
 const { Server } = require("socket.io");
 const cors = require('cors');
-const Chat = require('./src/models/chatModel');
 
+const Chat = require('./src/models/chatModel');
 const authRoutes = require('./src/routes/authRoutes');
 const adminRoutes = require('./src/routes/adminRoutes');
 const internRoutes = require('./src/routes/internRoutes');
 
 const app = express();
 
-// Use middleware
+// Middleware
 app.use(cors()); 
 app.use(express.json());
 app.use(express.static('public'));
 
+// HTTP Server & Socket.IO
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // For development, allow any origin. For production, restrict this.
+    origin: "*", // ⚠️ Use a specific origin in production
     methods: ["GET", "POST"]
   }
 });
 
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/intern', internRoutes);
 
+// Socket.IO handlers
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  // User joins a private room based on their own ID
   socket.on('joinRoom', (userId) => {
-    socket.join(String(userId)); // Join room with string name
+    socket.join(String(userId));
     console.log(`User ${socket.id} joined room: ${userId}`);
   });
 
-  // Listen for a private message
   socket.on('privateMessage', async ({ senderId, receiverId, message }) => {
     try {
-      // 1. Save message to the database
       await Chat.create(senderId, receiverId, message);
 
-      // 2. Send the message to the recipient's room
       io.to(String(receiverId)).emit('message', {
         sender: senderId,
         text: message
@@ -59,11 +58,8 @@ io.on('connection', (socket) => {
   });
 });
 
-// Get the port from environment variables, with a default value
+// Start the server (Render will provide the PORT)
 const PORT = process.env.PORT || 3000;
-
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
